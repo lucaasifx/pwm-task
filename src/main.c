@@ -13,6 +13,7 @@
 volatile uint8_t STEP = 0;
 
 const uint16_t DUTY_180 = 6000;
+const uint16_t DUTY_90 = 3675;
 
 // Configuração do PWM
 uint pwm_setup(uint8_t GPIO, uint32_t wrap, float div) {
@@ -39,7 +40,11 @@ int main() {
 
         printf("SERVO: 180\n");
         pwm_set_gpio_level(SERVO_PIN, DUTY_180);
-        sleep_ms(5000);
+        sleep_ms(DELAY_MS);
+
+        printf("SERVO: 90\n");
+        pwm_set_gpio_level(SERVO_PIN, DUTY_90);
+        sleep_ms(DELAY_MS);
 
 
     }
