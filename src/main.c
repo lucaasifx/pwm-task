@@ -12,6 +12,7 @@
 
 volatile uint8_t STEP = 0;
 
+const uint16_t DUTY_180 = 6000;
 
 // Configuração do PWM
 uint pwm_setup(uint8_t GPIO, uint32_t wrap, float div) {
@@ -36,7 +37,10 @@ int main() {
         float freq = clk / (float)(wrap * CLK_DIV);
         printf("Frequência atual: %.2f Hz\n", freq);
 
-
+        printf("SERVO: 180\n");
+        pwm_set_gpio_level(SERVO_PIN, DUTY_180);
         sleep_ms(5000);
+
+
     }
 }
