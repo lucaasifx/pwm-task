@@ -4,7 +4,9 @@
 #include "hardware/clocks.h"
 
 // ************************* MACROS ************************
-#define SERVO_PIN 22
+// GPIO definido no pino do servomotor
+    // para realizar os testes no led 
+#define GPIO_PIN 22
 #define WRAP 49999
 #define CLK_DIV 50
 #define DELAY_MS 5000 // Tempo de espera entre mudanças de posição
@@ -18,9 +20,9 @@ const uint16_t DUTY_0 = 1250;
 
 
 // Configuração do PWM
-uint pwm_setup(uint8_t GPIO, uint32_t wrap, float div) {
-    gpio_set_function(GPIO, GPIO_FUNC_PWM);
-    uint sliceNum = pwm_gpio_to_slice_num(GPIO);
+uint pwm_setup(uint8_t gpio_num, uint32_t wrap, float div) {
+    gpio_set_function(gpio_num, GPIO_FUNC_PWM);
+    uint sliceNum = pwm_gpio_to_slice_num(gpio_num);
     pwm_set_clkdiv(sliceNum, div);
     pwm_set_wrap(sliceNum, wrap);
     pwm_set_enabled(sliceNum, true);
@@ -28,7 +30,7 @@ uint pwm_setup(uint8_t GPIO, uint32_t wrap, float div) {
 }
 
 void move_servo() {
-    pwm_set_gpio_level(SERVO_PIN, STEP);
+    pwm_set_gpio_level(GPIO_PIN, STEP);
     // se estiver caindo
     if(!rise) {
         STEP += 12;
@@ -48,7 +50,7 @@ int main() {
     stdio_init_all();
     sleep_ms(2000); // Aguarda inicialização
 
-    uint slice = pwm_setup(SERVO_PIN, WRAP, CLK_DIV);
+    uint slice = pwm_setup(GPIO_PIN, WRAP, CLK_DIV);
     // Log de depuração
     int clk = clock_get_hz(clk_sys);
     uint32_t wrap = pwm_hw->slice[slice].top + 1;
@@ -58,15 +60,15 @@ int main() {
     printf("Frequência atual: %.2f Hz\n", freq);
 
     printf("SERVO: 180\n");
-    pwm_set_gpio_level(SERVO_PIN, DUTY_180);
+    pwm_set_gpio_level(GPIO_PIN, DUTY_180);
     sleep_ms(DELAY_MS);
 
     printf("SERVO: 90\n");
-    pwm_set_gpio_level(SERVO_PIN, DUTY_90);
+    pwm_set_gpio_level(GPIO_PIN, DUTY_90);
     sleep_ms(DELAY_MS);
 
     printf("SERVO: 0\n");
-    pwm_set_gpio_level(SERVO_PIN, DUTY_0);
+    pwm_set_gpio_level(GPIO_PIN, DUTY_0);
     sleep_ms(DELAY_MS);
     while (true) {
         move_servo();
