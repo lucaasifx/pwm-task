@@ -80,5 +80,5 @@ A simulação será conduzida no simulador de eletrônica online Wokwi, permitin
 - ✅ Execução do código na placa Raspberry Pi Pico W;
 
 - ✅ Interação com LED RGB e movimentação do servo;
-- 🔗 [Acesse o vídeo de demonstração](https://www.youtube.com/)
+- 🔗 [Acesse o vídeo de demonstração](https://youtu.be/KtKk-pK9jKI)
 ##
