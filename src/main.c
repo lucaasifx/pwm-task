@@ -7,8 +7,8 @@
 // GPIO definido no pino do servomotor
     // para realizar os testes no led 
 #define GPIO_PIN 22
-#define WRAP 49999
-#define CLK_DIV 50
+#define WRAP 49999 // Valor de top do contador de wrap
+#define CLK_DIV 50 // Divisor de clock
 #define DELAY_MS 5000 // Tempo de espera entre mudanças de posição
 #define STEP_DELAY_MS 10 // Tempo entre pequenos incrementos
 
@@ -48,7 +48,6 @@ void move_servo() {
 
 int main() {
     stdio_init_all();
-    sleep_ms(2000); // Aguarda inicialização
 
     uint slice = pwm_setup(GPIO_PIN, WRAP, CLK_DIV);
     // Log de depuração
@@ -73,6 +72,6 @@ int main() {
     while (true) {
         move_servo();
         // delay de 10ms entre as movimentações
-        sleep_ms(10);
+        sleep_ms(STEP_DELAY_MS);
     }
 }
